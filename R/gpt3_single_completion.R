@@ -103,11 +103,13 @@ gpt3_single_completion = function(prompt_input
 
   if(n == 1){
     core_output = data.table::data.table('n' = 1
+                                         , 'sum_logprobs' = sum(unlist((request_content$choices[[1]]$logprobs$token_logprobs)))
                                          , 'prompt' = prompt_input
                                          , 'gpt3' = request_content$choices[[1]]$text)
   } else if(n > 1){
 
     core_output = data.table::data.table('n' = 1:n
+                                         , 'sum_logprobs' = rep(sum(unlist((request_content$choices[[1]]$logprobs$token_logprobs))), n)
                                          , 'prompt' = rep(prompt_input, n)
                                          , 'gpt3' = rep("", n))
 
